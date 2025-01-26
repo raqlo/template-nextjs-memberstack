@@ -24,6 +24,9 @@
 .DS_Store
 *.pem
 
+# Thumbnails
+._*
+
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -39,3 +42,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# VSCode specific
+.vscode/
+
+# WebStorm/JetBrains specific
+.idea/
+*.iml
+
+# Common JetBrains-related caches and logs
+out/
+.idea_modules/
+*.ipr
+*.iws
