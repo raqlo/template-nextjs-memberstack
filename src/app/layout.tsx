@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import {MemberstackProvider} from "@memberstack/nextjs/client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,7 +28,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+      <MemberstackProvider config={{
+          publicKey: process.env.NEXT_PUBLIC_MEMBERSTACK_PUBLIC_KEY as string
+      }}>
         {children}
+      </MemberstackProvider>
       </body>
     </html>
   );
