@@ -55,7 +55,7 @@ class MemberstackApiHandler {
   }): Promise<ActionResponse<TResponse>> {
     try {
       // Get the user's token
-      const token = await verifySession();
+      const token = await verifySession(false);
       const headers = {
         authorization: `Bearer ${token}`,
         'X-API-Key': this.apiKey,

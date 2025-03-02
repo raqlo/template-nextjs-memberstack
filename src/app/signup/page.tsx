@@ -1,11 +1,10 @@
 'use client';
 import { NextPage } from 'next';
 import { useActionState } from 'react';
-import {signupUserAction} from "@/app/signup/actions";
-
+import { signupUserAction } from '@/app/signup/actions';
 
 const SignUpPage: NextPage = () => {
-  const [state, formAction] = useActionState(signupUserAction, {
+  const [state, formAction, pending] = useActionState(signupUserAction, {
     errorMessage: '',
   });
 
@@ -24,31 +23,6 @@ const SignUpPage: NextPage = () => {
             aliquam,purus sit amet luctus magna fringilla urna
           </p>
           <div className='mx-auto w-full max-w-sm'>
-            <a
-              href='#'
-              className='flex w-full max-w-full justify-center rounded-md bg-black py-3 text-white'
-            >
-              <img
-                src='https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a947090e6cf87_GoogleLogo.svg'
-                alt=''
-                className='mr-4 inline-block'
-              />
-              <p className='text-sm sm:text-base'>Sign up with Google</p>
-            </a>
-            {/* Divider */}
-            <div className='mb-14 mt-14 flex w-full justify-around'>
-              <img
-                src='https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a948ef4e6cf94_Line%203.svg'
-                alt=''
-                className='inline-block'
-              />
-              <p className='text-sm text-gray-500'>or sign up with email</p>
-              <img
-                src='https://assets.website-files.com/6458c625291a94a195e6cf3a/6458c625291a948ef4e6cf94_Line%203.svg'
-                alt=''
-                className='inline-block'
-              />
-            </div>
             {/* Form */}
             <div className='mx-auto mb-4 max-w-sm pb-4'>
               <form action={formAction} name='wf-form-password'>
@@ -73,14 +47,16 @@ const SignUpPage: NextPage = () => {
                   />
                   <input
                     name='password'
+                    minLength={8}
                     type='password'
                     className='mb-4 block h-9 w-full rounded-md border border-solid border-black px-3 py-6 pl-14 text-sm text-black placeholder:text-black'
                     placeholder='Password (min 8 characters)'
                   />
                 </div>
                 <input
+                  disabled={pending}
                   type='submit'
-                  value='Sign Up'
+                  value={pending ? 'Submitting' : 'Sign Up'}
                   className='mt-4 inline-block w-full cursor-pointer items-center rounded-md bg-black px-6 py-3 text-center font-semibold text-white'
                 />
                 {state && state.errorMessage && (

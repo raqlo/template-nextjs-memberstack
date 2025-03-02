@@ -7,12 +7,13 @@ export const NON_AUTH_FALLBACK_SLUG = '/login'; // Redirect route if the user is
 export const DEFAULT_LOGIN_URL = '/dashboard'; // Redirect route if the user is authenticated
 export const DEFAULT_LOGOUT_URL = '/'; // Redirect route if the user is authenticated
 
-export const verifySession = async () => {
+export const verifySession = async (redirectUnauth: boolean = false) => {
   const cookieStore = await cookies();
 
   const session = cookieStore.get(memberAuthTokenName)?.value;
   if (!session) {
-    redirect(NON_AUTH_FALLBACK_SLUG);
+    if (redirectUnauth) redirect(NON_AUTH_FALLBACK_SLUG);
+    return null;
   }
   return session;
 };
@@ -32,7 +33,6 @@ export const createSession = async ({
     sameSite: 'strict',
     domain,
   });
-  redirect(DEFAULT_LOGIN_URL);
 };
 
 export const deleteSession = async () => {
