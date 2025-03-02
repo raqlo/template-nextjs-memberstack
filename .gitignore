@@ -50,6 +50,7 @@ next-env.d.ts
 # WebStorm/JetBrains specific
 .idea/
 *.iml
+!/.idea/*
 
 # Common JetBrains-related caches and logs
 out/
