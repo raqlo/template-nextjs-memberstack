@@ -1,12 +1,12 @@
 import {
-  getCookie,
+  verifySession,
   getSessionDurationDays,
-  removeCookie,
-  setCookie,
-} from '@/app/auth/actions/utils/cookies';
+  deleteSession,
+  createSession,
+} from '@/app/auth/utils/session';
 import { Payload } from '@memberstack/dom/lib/types/utils/payloads';
 import Transforms = Payload.Transforms;
-import { AuthError, ServerError } from '@/app/auth/actions/utils/errors';
+import { AuthError, ServerError } from '@/app/auth/utils/errors';
 
 export const API_ENDPOINT = `https://client.memberstack.com`;
 
@@ -55,7 +55,7 @@ class MemberstackApiHandler {
   }): Promise<ActionResponse<TResponse>> {
     try {
       // Get the user's token
-      const token = await getCookie();
+      const token = await verifySession();
       const headers = {
         authorization: `Bearer ${token}`,
         'X-API-Key': this.apiKey,
@@ -80,7 +80,7 @@ class MemberstackApiHandler {
             const { accessToken, expires } = resData.data.tokens;
 
             // Set cookies for the authenticated user
-            await setCookie({
+            await createSession({
               token: accessToken,
               expires: getSessionDurationDays(expires),
             });
@@ -88,7 +88,7 @@ class MemberstackApiHandler {
             new ServerError('Missing token or expiration in the response.');
           }
         } else if (params.cookies === 'delete') {
-          await removeCookie();
+          await deleteSession();
         } else if (params.cookies === 'none' || !params.cookies) {
           // No cookie action needed
         }

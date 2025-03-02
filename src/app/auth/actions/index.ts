@@ -4,7 +4,7 @@ import {
   SignupMemberEmailPasswordParams,
   SignupMemberEmailPasswordPayload,
 } from '@memberstack/dom';
-import { MemberstackApiHandler } from './utils/memberstackApiHandler';
+import { MemberstackApiHandler } from '@/app/auth/utils/memberstackApiHandler';
 
 /**
  * Its primary role is to handle **server-side interactions with the Memberstack API**, enabling you to manage tasks commonly handled by Memberstack DOM on the frontend. It provides a centralized and efficient way to handle operations such as:

@@ -1,36 +1,13 @@
 'use client';
 import { NextPage } from 'next';
-import { signupWithPassword } from '../auth/actions';
 import { useActionState } from 'react';
-import {useRouter} from "next/navigation";
+import {signupUserAction} from "@/app/signup/actions";
+
 
 const SignUpPage: NextPage = () => {
-  const router = useRouter();
-  const [state, formAction] = useActionState(handleSubmitForm, {
+  const [state, formAction] = useActionState(signupUserAction, {
     errorMessage: '',
   });
-
-  async function handleSubmitForm(
-    prevState: { errorMessage: string } | undefined,
-    formData: FormData,
-  ) {
-    const form = Object.fromEntries(formData.entries());
-
-    // TIP: A validation step can be added before sending the request
-
-    const res = await signupWithPassword({
-      email: form.email as string,
-      password: form.password as string,
-    });
-
-    if (res.type === 'success') {
-      router.push('/dashboard');
-    } else if (res.type === 'error') {
-      return {
-        errorMessage: res.data,
-      };
-    }
-  }
 
   return (
     <section>
@@ -107,7 +84,9 @@ const SignUpPage: NextPage = () => {
                   className='mt-4 inline-block w-full cursor-pointer items-center rounded-md bg-black px-6 py-3 text-center font-semibold text-white'
                 />
                 {state && state.errorMessage && (
-                  <p className='text-red-600 p-2 bg-red-200 mt-2 rounded-md'>{state.errorMessage}</p>
+                  <p className='mt-2 rounded-md bg-red-200 p-2 text-red-600'>
+                    {state.errorMessage}
+                  </p>
                 )}
               </form>
             </div>
