@@ -8,7 +8,7 @@ import { Payload } from '@memberstack/dom/lib/types/utils/payloads';
 import Transforms = Payload.Transforms;
 import { AuthError, ServerError } from '@/app/auth/utils/errors';
 
-export const API_ENDPOINT = `https://client.memberstack.com`;
+const API_ENDPOINT = `https://client.memberstack.com`;
 
 type Response<T> = {
   data: T;
