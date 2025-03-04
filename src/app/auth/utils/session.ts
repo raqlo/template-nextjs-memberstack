@@ -1,4 +1,3 @@
-import 'server-only'
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -7,33 +6,39 @@ export const NON_AUTH_FALLBACK_SLUG = '/login'; // Redirect route if the user is
 export const DEFAULT_LOGIN_URL = '/dashboard'; // Redirect route if the user is authenticated
 export const DEFAULT_LOGOUT_URL = '/'; // Redirect route if the user is authenticated
 
-export const verifySession = async (redirectUnauth: boolean = false) => {
+export async function verifySession(redirectUnauth: boolean = false) {
   const cookieStore = await cookies();
-
   const session = cookieStore.get(memberAuthTokenName)?.value;
   if (!session) {
-    if (redirectUnauth) redirect(NON_AUTH_FALLBACK_SLUG);
+    if (redirectUnauth) {
+      redirect(NON_AUTH_FALLBACK_SLUG);
+    }
     return null;
   }
   return session;
-};
+}
 
-export const createSession = async ({
+export async function createSession({
   token,
   domain,
   expires,
+  sameSite,
 }: {
   token: string;
   domain?: string;
   expires?: number;
-}) => {
+  sameSite?: 'strict' | 'lax'
+}) {
+  const expirationInSeconds = expires && getSessionDurationSeconds(expires);
+
   const cookieStore = await cookies();
   cookieStore.set(memberAuthTokenName, token, {
-    expires: (expires && Number(expires)) || 14,
-    sameSite: 'strict',
-    domain,
+    sameSite,
+    path: '/',
+    maxAge: expirationInSeconds || 60 * 60 * 24 * 14
+      ,
   });
-};
+}
 
 export const deleteSession = async () => {
   const cookieStore = await cookies();
@@ -46,4 +51,10 @@ export function getSessionDurationDays(unixTimestampMillis: number) {
   const now = Date.now();
   const differenceMillis = unixTimestampMillis - now;
   return Math.ceil(differenceMillis / (24 * 60 * 60 * 1000));
+}
+
+export function getSessionDurationSeconds(unixTimestampMillis: number) {
+  const now = Date.now();
+  const differenceMillis = unixTimestampMillis - now;
+  return Math.max(0, Math.floor(differenceMillis / 1000)); // Convert to seconds, ensure non-negative
 }

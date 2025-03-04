@@ -5,6 +5,9 @@ import {
   SignupMemberEmailPasswordPayload,
 } from '@memberstack/dom';
 import { MemberstackApiHandler } from '@/app/auth/utils/memberstackApiHandler';
+import {
+  createSession,
+} from '@/app/auth/utils/session';
 
 /**
  * Its primary role is to handle **server-side interactions with the Memberstack API**, enabling you to manage tasks commonly handled by Memberstack DOM on the frontend. It provides a centralized and efficient way to handle operations such as:
@@ -75,10 +78,22 @@ export const signupEmailWithPasswordAction = async ({
     captchaToken,
     plans,
   };
-  return await memberstackApiHandler.request<SignupMemberEmailPasswordPayload>({
+  const res = await memberstackApiHandler.request<
+    SignupMemberEmailPasswordPayload['data']
+  >({
     method: 'POST',
     routeParams: formattedUrl,
     body,
-    cookies: 'set',
   });
+
+  if (res.type === 'success') {
+    // Set cookies for the authenticated user
+    await createSession({
+      token: res.data.tokens.accessToken,
+      // expires: getSessionDurationDays(res.data.tokens.expires),
+      sameSite: 'lax',
+      expires: res.data.tokens.expires
+    });
+  }
+  return res;
 };

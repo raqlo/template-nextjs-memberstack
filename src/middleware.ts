@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {DEFAULT_LOGIN_URL, NON_AUTH_FALLBACK_SLUG, verifySession} from '@/app/auth/utils/session';
+import {DEFAULT_LOGIN_URL, NON_AUTH_FALLBACK_SLUG} from '@/app/auth/utils/session';
 
 // 1. Specify protected and public routes
 const protectedRoutes = ['/dashboard'];
@@ -11,19 +11,18 @@ export default async function middleware(req: NextRequest) {
   const isProtectedRoute = protectedRoutes.includes(path);
   const isPublicRoute = publicRoutes.includes(path);
 
-  // 3. Decrypt the session from the cookie
-  const cookie = await verifySession();
-  const session = cookie && JSON.parse(cookie);
+  // // 3. Decrypt the session from the cookie
+  const sessionCookie = req.cookies.get("_ms-mid");
 
   // 4. Redirect to /login if the user is not authenticated
-  if (isProtectedRoute && !session?.id) {
+  if (isProtectedRoute && !sessionCookie) {
     return NextResponse.redirect(new URL(NON_AUTH_FALLBACK_SLUG, req.nextUrl));
   }
 
   // 5. Redirect to /dashboard if the user is authenticated
   if (
     isPublicRoute &&
-    session?.userId &&
+    sessionCookie &&
     !req.nextUrl.pathname.startsWith(DEFAULT_LOGIN_URL)
   ) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_URL, req.nextUrl));
@@ -34,5 +33,5 @@ export default async function middleware(req: NextRequest) {
 
 // Routes Middleware should not run on
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$|favicon\\.ico$).*)'],
 };
