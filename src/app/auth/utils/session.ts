@@ -1,10 +1,8 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import {DEFAULT_LOGOUT_URL, NON_AUTH_FALLBACK_SLUG} from "@/app/auth/utils/enums";
 
 const memberAuthTokenName = '_ms-mid';
-export const NON_AUTH_FALLBACK_SLUG = '/login'; // Redirect route if the user is not authenticated
-export const DEFAULT_LOGIN_URL = '/dashboard'; // Redirect route if the user is authenticated
-export const DEFAULT_LOGOUT_URL = '/'; // Redirect route if the user is authenticated
 
 export async function verifySession(redirectUnauth: boolean = false) {
   const cookieStore = await cookies();

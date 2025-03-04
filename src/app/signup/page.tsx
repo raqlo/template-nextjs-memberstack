@@ -3,6 +3,8 @@ import { NextPage } from 'next';
 import { useActionState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { signupUserAction } from '@/app/signup/actions';
+import {DEFAULT_LOGIN_URL} from "@/app/auth/utils/enums";
+import Link from "next/link";
 
 const SignUpPage: NextPage = () => {
   const router = useRouter();
@@ -13,7 +15,7 @@ const SignUpPage: NextPage = () => {
 
   useEffect(() => {
     if (state?.success) {
-      router.replace('/dashboard');
+      router.replace(DEFAULT_LOGIN_URL);
     }
   }, [state?.success, router]);
 
@@ -77,9 +79,9 @@ const SignUpPage: NextPage = () => {
             </div>
             <p className='text-sm text-gray-500'>
               Already have an account?
-              <a href='#' className='font-bold'>
-                <span> </span> Login now
-              </a>
+              <Link href='/login' className='font-bold'>
+                <span> </span> Login
+              </Link>
             </p>
           </div>
         </div>

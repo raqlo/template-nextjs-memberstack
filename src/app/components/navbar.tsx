@@ -1,11 +1,12 @@
 import { AuthButtons } from '@/app/components/authButtons';
+import Link from "next/link";
 
 export function Navbar() {
   return (
     <section>
       <nav className='font-inter mx-auto h-auto w-full max-w-screen-2xl md:relative md:top-0'>
         <div className='flex flex-col px-6 py-6 md:flex-row md:items-center md:justify-between md:px-10 md:py-4 xl:px-20'>
-          <a href='#'>
+          <Link href={'/'}>
             <svg
               width='164'
               height='31'
@@ -59,7 +60,7 @@ export function Navbar() {
                 fill='black'
               />
             </svg>
-          </a>
+          </Link>
           <div className='mt-14 flex flex-col space-y-8 md:mt-0 md:flex md:flex-row md:space-x-1 md:space-y-0'>
             <a
               href='#'
