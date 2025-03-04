@@ -54,7 +54,6 @@ import {
  *     method: 'POST', // HTTP method
  *     routeParams: formattedUrl, // API route
  *     body, // Request payload
- *     cookies: 'set', // Optional cookie handling (e.g., 'set' or 'remove')
  *   });
  * };
  */
@@ -90,7 +89,6 @@ export const signupEmailWithPasswordAction = async ({
     // Set cookies for the authenticated user
     await createSession({
       token: res.data.tokens.accessToken,
-      // expires: getSessionDurationDays(res.data.tokens.expires),
       sameSite: 'lax',
       expires: res.data.tokens.expires
     });

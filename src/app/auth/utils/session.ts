@@ -20,14 +20,13 @@ export async function verifySession(redirectUnauth: boolean = false) {
 
 export async function createSession({
   token,
-  domain,
   expires,
   sameSite,
 }: {
   token: string;
   domain?: string;
   expires?: number;
-  sameSite?: 'strict' | 'lax'
+  sameSite?: 'strict' | 'lax';
 }) {
   const expirationInSeconds = expires && getSessionDurationSeconds(expires);
 
@@ -35,8 +34,7 @@ export async function createSession({
   cookieStore.set(memberAuthTokenName, token, {
     sameSite,
     path: '/',
-    maxAge: expirationInSeconds || 60 * 60 * 24 * 14
-      ,
+    maxAge: expirationInSeconds || 60 * 60 * 24 * 14,
   });
 }
 
