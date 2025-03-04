@@ -57,3 +57,5 @@ out/
 .idea_modules/
 *.ipr
 *.iws
+
+certificates
