@@ -8,7 +8,7 @@ export function AuthButtons() {
   const { isLoggedIn, signOut } = useAuth();
   const router = useRouter();
 
-  const handleLogout = async () => {
+    const handleLogout = async () => {
       await signOut();
       router.replace(DEFAULT_LOGOUT_URL)
   }
