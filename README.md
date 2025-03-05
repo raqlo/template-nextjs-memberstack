@@ -51,6 +51,8 @@ You can integrate Memberstack into your Next.js project in different ways, depen
 
 📌 Example in this template: The `sign-up` feature uses server actions for authentication.
 
+Additionally, this template uses server-side middleware to protect routes, ensuring only authenticated users can access certain pages. However, you can also implement protected routes on the client side using a Protected Route Provider that restricts access based on authentication state.
+
 This template is designed to give you a starting point, so you can see how both approaches work and decide which one best suits your project.
 
 ## Credits and Acknowledgments
