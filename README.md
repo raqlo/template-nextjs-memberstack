@@ -2,6 +2,8 @@
 This project provides a simple and effective starting point for integrating **Memberstack** into your **Next.js** application.
 With this template, you can quickly set up a secure and scalable app, leveraging Memberstack’s features for authentication, user management, and membership functionality.
 
+- **Demo**: [template-nextjs-memberstack.vercel.app](https://template-nextjs-memberstack.vercel.app/)
+
 ## Getting Started
 
 ### Creating Up Your Memberstack App
@@ -41,13 +43,11 @@ If you want to be able to take advantage of the debugging capabilities of your I
 Adding Memberstack to Your Next.js Project
 You can integrate Memberstack into your Next.js project in different ways, depending on your needs. This template demonstrates two common approaches, but you can choose the one that best fits your optimization goals or how you prefer to use Next.js.
 
-1. Client-Side Approach with the AuthProvider Component
-   For a simple, client-side authentication setup, wrap your main layout or root component with Memberstack’s AuthProvider. This approach allows you to manage authentication entirely on the client side, making it easy to access user data and authentication states throughout your app. You can also use Memberstack’s React hooks to interact with authentication features within your client components.
+**1. Client-Side Approach with the AuthProvider Component**   <br />For a simple, client-side authentication setup, wrap your main layout or root component with Memberstack’s AuthProvider. This approach allows you to manage authentication entirely on the client side, making it easy to access user data and authentication states throughout your app. You can also use Memberstack’s React hooks to interact with authentication features within your client components.
 
 📌 Example in this template: The `login` and `profile` features, including the profile update form, follow this approach.
 
-2. Server-Side Approach with Server Actions
-   For enhanced security and customization, you can integrate Memberstack using Next.js server actions. This approach is useful for securely managing authentication flows, enforcing route protection, and creating custom server-side APIs that interact with Memberstack.
+**2. Server-Side Approach with Server Actions**   <br />For enhanced security and customization, you can integrate Memberstack using Next.js server actions. This approach is useful for securely managing authentication flows, enforcing route protection, and creating custom server-side APIs that interact with Memberstack.
 
 📌 Example in this template: The `sign-up` feature uses server actions for authentication.
 
