@@ -19,7 +19,6 @@ const LoginPage: NextPage = () => {
     setLoading(true);
     setErrorMessage('');
 
-    debugger;
     try {
       await loginMemberEmailPassword({ email, password });
       router.replace(DEFAULT_LOGIN_URL);
